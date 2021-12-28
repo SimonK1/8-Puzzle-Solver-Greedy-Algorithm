@@ -2,6 +2,7 @@ import sys
 import copy
 import time
 
+
 class Node:
     def __init__(self, state=None, depth=None, path=None, operation=None, hValue=None, parent=None):
         self.state = state
@@ -12,9 +13,10 @@ class Node:
         self.parent = parent
 
     # Function for checking solvability of our puzzle
-    def solvable(self, start_state):
+    @staticmethod
+    def solvable(start_state):
 
-        inv_count = 0;
+        inv_count = 0
         if start_state[0][1] > start_state[0][1]:
             print("yes")
         for i in range(0, xsize):
@@ -34,7 +36,8 @@ class Node:
         return inv_count
 
     # Heuristic Function which decides which heuristic to use according to input
-    def heuristic(self, state, goal_state):
+    @staticmethod
+    def heuristic(state, goal_state):
 
         # Heuristic - Displaced Tiles
         if heuristic == '1':
@@ -67,7 +70,8 @@ class Node:
                         score += abs(i - goalx[num]) + abs(j - goaly[num])
             return score
 
-    def toString(self, tempState):
+    @staticmethod
+    def toString(tempState):
         s = ''
         for i in tempState:
             for j in i:
@@ -175,7 +179,7 @@ class Node:
         # Putting root into priority queue
         priority_queue.append(startNode)
 
-        # Unlimited while
+        # Infinite while
         while 1:
 
             # Sorting our priority queue according to heuristic value + deleting node
@@ -197,14 +201,11 @@ class Node:
             for i in tchilds:
                 priority_queue.append(i)
 
-        return 0
+    @staticmethod
+    def printFinal(totalNodes, curPath, parent):
 
-    def vypis(self, totalNodes, curPath, parent):
-
-        path = []
         # Printing of solved sequence
         while 1:
-            f = 0
             for u in range(0, xsize):
                 for j in range(0, ysize):
                     print(parent.state[u][j], '', end='')
@@ -215,14 +216,11 @@ class Node:
             parent = parent.parent
 
         # Printing additional information
-
         print("Moves", str(len(curPath)))
         print(curPath)
         print("Total Nodes Visited:", str(totalNodes))
         print("Time:", str(time.time() - start_time))
         sys.exit()
-
-        return 1
 
 
 # Program initialisation
